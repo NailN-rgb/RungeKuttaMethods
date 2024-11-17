@@ -3,10 +3,9 @@
 R-K Solver created
 Сreation of RK2 Method for one DE
 
-
-TODO:
 ------------------------------
-RK2 for system of eqautions
+16.11.24
+RK2 for system of eqautions (C++ vectorized)
 
 
 ------------------------------
