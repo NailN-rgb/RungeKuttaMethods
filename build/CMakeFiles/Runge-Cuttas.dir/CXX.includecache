@@ -12,12 +12,16 @@
 RungeKuttaMethods/plot/matplotlibcpp.h
 -
 
-../../RungeKuttaMethods/methods/RK2/RK2.h
+../../RungeKuttaMethods/methods/RK2/ButcherMethod.h
+
+../../RungeKuttaMethods/methods/RK2/HeunsMethod.h
 
 ../../RungeKuttaMethods/methods_fabric.inl
 RungeKuttaMethods/methods/BaseRK.h
 -
-RungeKuttaMethods/methods/RK2/RK2.h
+RungeKuttaMethods/methods/RK2/HeunsMethod.h
+-
+RungeKuttaMethods/methods/RK2/ButcherMethod.h
 -
 
 ../../RungeKuttaMethods/plot/matplotlibcpp.h

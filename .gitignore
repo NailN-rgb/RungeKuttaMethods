@@ -1,2 +1,9 @@
-/build
-/.vscode
+build/
+.vscode/
+build/Runge-Cuttas
+build/CMakeFiles/CMakeOutput.log
+build/CMakeFiles/Makefile.cmake
+build/CMakeFiles/Runge-Cuttas.dir/CXX.includecache
+build/CMakeFiles/Runge-Cuttas.dir/depend.internal
+build/CMakeFiles/Runge-Cuttas.dir/depend.make
+build/CMakeFiles/Runge-Cuttas.dir/main.cpp.o

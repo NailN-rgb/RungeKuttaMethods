@@ -14,23 +14,25 @@
 
 int main()
 {
-    using value_type = double;
-    using index_type = int;
-
-    using equation_type = RKequation::equation<index_type, value_type>;
+    using value_type       = double;
+    using index_type       = int;
+    using vector_of_values = std::vector<value_type>;
+    using equation_type    = RKequation::equation<index_type, value_type>;
 
     // enter datas for solvers start
-    value_type start_t = 0.;
-    value_type start_x = 1.;
-    value_type start_y = 0.;
-    value_type end = 5.;
-    value_type step = 0.1;
+    value_type start_t       = 0.;
+    vector_of_values start_y = {0.0, 0.0};
+    value_type end           = 1.;
+    value_type step          = 0.01;
 
     // enter solver type
-    std::string solver_type = "RK2";
+    // possible solvers
+    // RK2Heuns
+    // RK2Butcher
+    std::string solver_type = "RK2Butcher";
 
     // init solver start datas
-    equation_type eq(start_t, start_x, start_y, end, step);
+    equation_type eq(start_t, start_y, end, step);
 
 
     // call solvers fabric

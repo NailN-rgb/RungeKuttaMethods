@@ -3,7 +3,8 @@
 
 CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/equation/equation.h
 CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/methods/BaseRK.h
-CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/methods/RK2/RK2.h
+CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/methods/RK2/ButcherMethod.h
+CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/methods/RK2/HeunsMethod.h
 CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/methods_fabric.inl
 CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../../RungeKuttaMethods/plot/matplotlibcpp.h
 CMakeFiles/Runge-Cuttas.dir/main.cpp.o: ../main.cpp

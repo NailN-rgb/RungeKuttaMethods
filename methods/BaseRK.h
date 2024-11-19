@@ -23,7 +23,7 @@ protected:
     equation_type m_equation;
     vector_of_vectors m_calc_solution;
     vector_of_vectors m_expl_solution;
-    vector_of_vectors m_t_points;
+    vector_of_values m_t_points;
     value_type m_step;
     index_type m_steps_limit = 10000;
 
@@ -49,7 +49,7 @@ protected:
 
 protected:
     virtual vector_of_values get_next_solution(
-        vector_of_values old_point,
+        value_type old_point,
         vector_of_values old_solution
     ) = 0;
 
@@ -75,41 +75,37 @@ template<
             throw std::runtime_error("Failed to set initial value.");
         }
 
-        auto t_old = m_equation.get_start_point();
-        auto t_max = m_equation.get_end_point();
-
-        if (t_old.empty()) {
-            throw std::runtime_error("Start point cannot be empty.");
-        }
+        auto t_old   = m_equation.get_start_t();
+        auto y_start = m_equation.get_start_y();
+        auto t_max   = m_equation.get_last_t();
 
         for (std::size_t i = 1; i < m_steps_limit; i++)
         {
-            if (m_calc_solution.empty()) {
+            if (m_calc_solution.empty()) 
+            {
                 throw std::runtime_error("No previous solution for calculating next solution.");
             }
 
             m_calc_solution.push_back(get_next_solution(t_old, m_calc_solution.back()));
 
-            std::transform(
-                t_old.begin(),
-                t_old.end(),
-                t_old.begin(),
-                [&](auto coord) { return coord + m_step; }
-            );
+            t_old += m_step;
 
-            m_expl_solution.push_back(m_equation.expl_sol(t_old.front()));
+            m_expl_solution.push_back(m_equation.expl_sol(t_old));
             m_t_points.push_back(t_old);
 
-            if (t_old.front() > t_max - m_step) {
+            if (t_old > t_max - m_step) 
+            {
                 break;
             }
         }
 
-        if (!get_max_error()) {
+        if (!get_max_error()) 
+        {
             throw std::runtime_error("Failed to compute max error.");
         }
 
-        if (!visualize()) {
+        if (!visualize()) 
+        {
             throw std::runtime_error("Failed to visualize results.");
         }
     }
@@ -130,14 +126,10 @@ template<
 {
     try
     {
-        auto start_point = m_equation.get_start_point();
-        if (start_point.empty()) 
-        {
-            throw std::runtime_error("Start point cannot be empty.");
-        }
+        auto start_point = m_equation.get_start_t();
 
-        m_calc_solution.push_back(m_equation.expl_sol(start_point.front()));
-        m_expl_solution.push_back(m_equation.expl_sol(start_point.front()));
+        m_calc_solution.push_back(m_equation.expl_sol(start_point));
+        m_expl_solution.push_back(m_equation.expl_sol(start_point));
         m_t_points.push_back(start_point);
     }
     catch (const std::exception& e)
@@ -157,7 +149,8 @@ template<
 {
     try
     {
-        if (m_calc_solution.size() != m_expl_solution.size()) {
+        if (m_calc_solution.size() != m_expl_solution.size()) 
+        {
             throw std::runtime_error("Calculated and explicit solution sizes differ.");
         }
 
@@ -240,16 +233,9 @@ template<
                 [i](const vector_of_values& explicit_sol) { return explicit_sol[i]; }
             );
 
-            std::transform(
-                m_t_points.begin(),
-                m_t_points.end(),
-                points_by_t.begin(),
-                [](const vector_of_values& coordinates) { return coordinates.front(); }
-            );
-
             plt::figure_size(1200, 780);
-            plt::named_plot("calc", points_by_t, calculated_vector_solution);
-            plt::named_plot("Expl", points_by_t, explicit_vector_solution);
+            plt::named_plot("calc", m_t_points, calculated_vector_solution);
+            plt::named_plot("Expl", m_t_points, explicit_vector_solution);
             plt::title("Correlation of calc & expl solutions");
             plt::legend();
 
@@ -274,7 +260,7 @@ std::vector<double> operator*(double scalar, std::vector<double> vec)
         vec.begin(),
         vec.end(),
         result.begin(),
-        [scalar](auto value) 
+        [scalar](double value) 
         { 
             return value * scalar; 
         }
@@ -284,7 +270,7 @@ std::vector<double> operator*(double scalar, std::vector<double> vec)
 }
 
 
-std::vector<double> operator+(std::vector<double> vec1, std::vector<double> vec2)
+std::vector<double> operator+(const std::vector<double>& vec1, const std::vector<double>& vec2)
 {
     std::vector<double> result(vec1.size());
     std::transform(
@@ -292,7 +278,7 @@ std::vector<double> operator+(std::vector<double> vec1, std::vector<double> vec2
         vec1.end(),
         vec2.begin(),
         result.begin(),
-        [&](auto val1, auto val2) 
+        [&](double val1, double val2) 
         { 
             return val1 + val2; 
         }
@@ -302,14 +288,14 @@ std::vector<double> operator+(std::vector<double> vec1, std::vector<double> vec2
 }
 
 
-std::vector<double> operator+(std::vector<double> vec, double scalar)
+std::vector<double> operator+(const std::vector<double>& vec, double scalar)
 {
     std::vector<double> result(vec.size());
     std::transform(
         vec.begin(),
         vec.end(),
         result.begin(),
-        [&](auto val) 
+        [&](double val) 
         { 
             return val + scalar; 
         }
