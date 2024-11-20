@@ -20,6 +20,8 @@ RungeKuttaMethods/plot/matplotlibcpp.h
 
 ../../RungeKuttaMethods/methods/RK3/KuttaMethod.h
 
+../../RungeKuttaMethods/methods/RK4/ClassicMethod.h
+
 ../../RungeKuttaMethods/methods_fabric.inl
 RungeKuttaMethods/methods/BaseRK.h
 -
@@ -30,6 +32,8 @@ RungeKuttaMethods/methods/RK2/ButcherMethod.h
 RungeKuttaMethods/methods/RK3/KuttaMethod.h
 -
 RungeKuttaMethods/methods/RK3/Heun3dMethod.h
+-
+RungeKuttaMethods/methods/RK4/ClassicMethod.h
 -
 
 ../../RungeKuttaMethods/plot/matplotlibcpp.h

@@ -9,6 +9,9 @@
 #include <RungeKuttaMethods/methods/RK3/KuttaMethod.h>
 #include <RungeKuttaMethods/methods/RK3/Heun3dMethod.h>
 
+//RK4
+#include <RungeKuttaMethods/methods/RK4/ClassicMethod.h>
+
 namespace Solvers_Fabric
 {
 
@@ -20,13 +23,15 @@ struct Solvers_Fabric
         typename equation_type
     > static std::unique_ptr<solvers::BaseRK<index_type, value_type>> apply(std::string solver_id, equation_type equation) 
     {
-        using base_solver_type    = solvers::BaseRK<index_type, value_type>;
+        using base_solver_type      = solvers::BaseRK<index_type, value_type>;
         //RK2
-        using Heuns_solver_type   = solvers::HeunsMethod::HeunsMethod<base_solver_type>;
-        using Butcher_solver_type = solvers::ButcherMethod::ButcherMethod<base_solver_type>;
+        using Heuns_solver_type     = solvers::HeunsMethod::HeunsMethod<base_solver_type>;
+        using Butcher_solver_type   = solvers::ButcherMethod::ButcherMethod<base_solver_type>;
         //RK3 
-        using Kutta_solver_type   = solvers::KuttaMethod::KuttaMethod<base_solver_type>;
-        using Heun3d_solver_type  = solvers::Heun3dMethod::Heun3dMethod<base_solver_type>;
+        using Kutta_solver_type     = solvers::KuttaMethod::KuttaMethod<base_solver_type>;
+        using Heun3d_solver_type    = solvers::Heun3dMethod::Heun3dMethod<base_solver_type>;
+        //RK4
+        using ClassicRK_solver_type = solvers::ClassicRungeKutta::ClassicRungeKutta<base_solver_type>;
 
         if(solver_id == "RK2Heuns")
         {
@@ -43,6 +48,10 @@ struct Solvers_Fabric
         else if(solver_id == "RK3Heuns")
         {
             return std::make_unique<Heun3d_solver_type>(equation);
+        }
+        else if(solver_id == "RK4Classic")
+        {
+            return std::make_unique<ClassicRK_solver_type>(equation);
         }
         else
         {

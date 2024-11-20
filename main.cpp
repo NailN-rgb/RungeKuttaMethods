@@ -31,7 +31,8 @@ int main()
     // RK2Butcher
     // RK3Kutta
     // RK3Heuns
-    std::string solver_type = "RK3Heuns";
+    // RK4Classic
+    std::string solver_type = "RK4Classic";
 
     // init solver start datas
     equation_type eq(start_t, start_y, end, step);
