@@ -29,7 +29,9 @@ int main()
     // possible solvers
     // RK2Heuns
     // RK2Butcher
-    std::string solver_type = "RK2Butcher";
+    // RK3Kutta
+    // RK3Heuns
+    std::string solver_type = "RK3Heuns";
 
     // init solver start datas
     equation_type eq(start_t, start_y, end, step);

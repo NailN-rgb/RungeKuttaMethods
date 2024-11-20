@@ -1,6 +1,13 @@
 #pragma once
 
 
+/* Solver with tableau
+*  0 |   0   0
+* 2/3| 2/3   0
+* ___|________
+*    | 1/4 3/4
+*/
+
 namespace solvers::ButcherMethod
 {
 

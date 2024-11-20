@@ -288,6 +288,12 @@ std::vector<double> operator+(const std::vector<double>& vec1, const std::vector
 }
 
 
+std::vector<double> operator-(const std::vector<double>& vec1, const std::vector<double>& vec2)
+{
+    return vec1 + (-1) * vec2;
+}
+
+
 std::vector<double> operator+(const std::vector<double>& vec, double scalar)
 {
     std::vector<double> result(vec.size());

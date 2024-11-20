@@ -6,6 +6,8 @@ CMakeFiles/Runge-Cuttas.dir/main.cpp.o
  ../../RungeKuttaMethods/methods/BaseRK.h
  ../../RungeKuttaMethods/methods/RK2/ButcherMethod.h
  ../../RungeKuttaMethods/methods/RK2/HeunsMethod.h
+ ../../RungeKuttaMethods/methods/RK3/Heun3dMethod.h
+ ../../RungeKuttaMethods/methods/RK3/KuttaMethod.h
  ../../RungeKuttaMethods/methods_fabric.inl
  ../../RungeKuttaMethods/plot/matplotlibcpp.h
  /home/nail/mytestprojects/RungeKuttaMethods/main.cpp
