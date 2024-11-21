@@ -32,7 +32,9 @@ int main()
     // RK3Kutta
     // RK3Heuns
     // RK4Classic
-    std::string solver_type = "RK4Classic";
+    // BacwardEuler
+    // BackwardCrankNicolson
+    std::string solver_type = "BackwardCrankNicolson";
 
     // init solver start datas
     equation_type eq(start_t, start_y, end, step);

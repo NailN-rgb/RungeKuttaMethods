@@ -9,7 +9,15 @@
 ../../RungeKuttaMethods/equation/equation.h
 
 ../../RungeKuttaMethods/methods/BaseRK.h
+RungeKuttaMethods/methods/utils/vector_operations.h
+-
 RungeKuttaMethods/plot/matplotlibcpp.h
+-
+
+../../RungeKuttaMethods/methods/ImplicitMethods/bakward_euler.h
+
+../../RungeKuttaMethods/methods/ImplicitMethods/crank_nicolcon.h
+RungeKuttaMethods/methods/utils/vector_operations.h
 -
 
 ../../RungeKuttaMethods/methods/RK2/ButcherMethod.h
@@ -21,6 +29,8 @@ RungeKuttaMethods/plot/matplotlibcpp.h
 ../../RungeKuttaMethods/methods/RK3/KuttaMethod.h
 
 ../../RungeKuttaMethods/methods/RK4/ClassicMethod.h
+
+../../RungeKuttaMethods/methods/utils/vector_operations.h
 
 ../../RungeKuttaMethods/methods_fabric.inl
 RungeKuttaMethods/methods/BaseRK.h
@@ -34,6 +44,10 @@ RungeKuttaMethods/methods/RK3/KuttaMethod.h
 RungeKuttaMethods/methods/RK3/Heun3dMethod.h
 -
 RungeKuttaMethods/methods/RK4/ClassicMethod.h
+-
+RungeKuttaMethods/methods/ImplicitMethods/bakward_euler.h
+-
+RungeKuttaMethods/methods/ImplicitMethods/crank_nicolcon.h
 -
 
 ../../RungeKuttaMethods/plot/matplotlibcpp.h

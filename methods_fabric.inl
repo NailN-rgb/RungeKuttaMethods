@@ -12,6 +12,11 @@
 //RK4
 #include <RungeKuttaMethods/methods/RK4/ClassicMethod.h>
 
+// implicit
+#include <RungeKuttaMethods/methods/ImplicitMethods/bakward_euler.h>
+#include <RungeKuttaMethods/methods/ImplicitMethods/crank_nicolcon.h>
+
+
 namespace Solvers_Fabric
 {
 
@@ -33,6 +38,11 @@ struct Solvers_Fabric
         //RK4
         using ClassicRK_solver_type = solvers::ClassicRungeKutta::ClassicRungeKutta<base_solver_type>;
 
+        // implicit methods
+        using backward_euler_solver_type = solvers::BackwardEuler::BackwardEuler<base_solver_type>;
+        using crank_nicolson_solver_type = solvers::CrankNicolson::CrankNicolson<base_solver_type>;
+
+
         if(solver_id == "RK2Heuns")
         {
             return std::make_unique<Heuns_solver_type>(equation);
@@ -52,6 +62,14 @@ struct Solvers_Fabric
         else if(solver_id == "RK4Classic")
         {
             return std::make_unique<ClassicRK_solver_type>(equation);
+        }
+        else if(solver_id == "BacwardEuler")
+        {
+            return std::make_unique<backward_euler_solver_type>(equation);
+        }
+        else if(solver_id == "BackwardCrankNicolson")
+        {
+            return std::make_unique<crank_nicolson_solver_type>(equation);
         }
         else
         {

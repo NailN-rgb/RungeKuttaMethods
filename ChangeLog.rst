@@ -12,6 +12,7 @@ RK3(Heuns, Kutta Methods),
 RK4(Runge-Rutta Classic Methods) realized 
 ------------------------------
 Implicit Method Solver
+// Create utils for Base RK
 ------------------------------
 Adaptive Stepwise Solver
 (------------------------------)

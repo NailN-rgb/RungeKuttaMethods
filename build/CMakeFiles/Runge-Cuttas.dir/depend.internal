@@ -4,11 +4,14 @@
 CMakeFiles/Runge-Cuttas.dir/main.cpp.o
  ../../RungeKuttaMethods/equation/equation.h
  ../../RungeKuttaMethods/methods/BaseRK.h
+ ../../RungeKuttaMethods/methods/ImplicitMethods/bakward_euler.h
+ ../../RungeKuttaMethods/methods/ImplicitMethods/crank_nicolcon.h
  ../../RungeKuttaMethods/methods/RK2/ButcherMethod.h
  ../../RungeKuttaMethods/methods/RK2/HeunsMethod.h
  ../../RungeKuttaMethods/methods/RK3/Heun3dMethod.h
  ../../RungeKuttaMethods/methods/RK3/KuttaMethod.h
  ../../RungeKuttaMethods/methods/RK4/ClassicMethod.h
+ ../../RungeKuttaMethods/methods/utils/vector_operations.h
  ../../RungeKuttaMethods/methods_fabric.inl
  ../../RungeKuttaMethods/plot/matplotlibcpp.h
  /home/nail/mytestprojects/RungeKuttaMethods/main.cpp
