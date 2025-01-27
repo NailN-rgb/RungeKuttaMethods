@@ -8,6 +8,8 @@
 
 ../../RungeKuttaMethods/equation/equation.h
 
+../../RungeKuttaMethods/methods/AdaptiveMethods/RKMerson.h
+
 ../../RungeKuttaMethods/methods/BaseRK.h
 RungeKuttaMethods/methods/utils/vector_operations.h
 -
@@ -48,6 +50,8 @@ RungeKuttaMethods/methods/RK4/ClassicMethod.h
 RungeKuttaMethods/methods/ImplicitMethods/bakward_euler.h
 -
 RungeKuttaMethods/methods/ImplicitMethods/crank_nicolcon.h
+-
+RungeKuttaMethods/methods/AdaptiveMethods/RKMerson.h
 -
 
 ../../RungeKuttaMethods/plot/matplotlibcpp.h

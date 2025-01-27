@@ -48,7 +48,8 @@ public:
         auto k3 = m_equation.f(old_point + 1./2. * m_step, old_solution + 1./2. * m_step * k2);
         auto k4 = m_equation.f(old_point + m_step, old_solution + m_step * k3);
         
-        return old_solution + m_step * (1./6. * k1 + 1./3. * k2 + 1./3. * k3 +  1./6. * k4); 
+        next_sol = m_step * (1./6. * k1 + 1./3. * k2 + 1./3. * k3 +  1./6. * k4);
+        return old_solution + next_sol; 
     }
 };
 

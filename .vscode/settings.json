@@ -60,6 +60,9 @@
         "map": "cpp",
         "memory_resource": "cpp",
         "random": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "csignal": "cpp",
+        "codecvt": "cpp",
+        "future": "cpp"
     }
 }

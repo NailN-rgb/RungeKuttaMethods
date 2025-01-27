@@ -8,7 +8,7 @@
 #include <functional>
 #include <numeric>
 
-#include <RungeKuttaMethods/equation/equation.h>
+#include <RungeKuttaMethods/equation/ThreeBody.h>
 #include <RungeKuttaMethods/methods_fabric.inl>
 
 
@@ -21,9 +21,10 @@ int main()
 
     // enter datas for solvers start
     value_type start_t       = 0.;
-    vector_of_values start_y = {0.0, 0.0};
-    value_type end           = 1.;
-    value_type step          = 0.01;
+    vector_of_values start_y = {0.994, 0.0, 0.0, -2.031732629557337};
+    // vector_of_values start_y = {0.994, 0.0};
+    value_type end           = 5.;
+    value_type step          = 0.1;
 
     // enter solver type
     // possible solvers
@@ -34,18 +35,18 @@ int main()
     // RK4Classic
     // BacwardEuler
     // BackwardCrankNicolson
-    std::string solver_type = "BackwardCrankNicolson";
+    // MersonRK
+    std::string solver_type = "MersonRK";
 
     // init solver start datas
-    equation_type eq(start_t, start_y, end, step);
-
+    equation_type eq(start_t, start_y, end, step/((i + 1) * 10));
 
     // call solvers fabric
     auto solver = Solvers_Fabric::Solvers_Fabric::apply<
         index_type, value_type, equation_type
     >(solver_type, eq);
 
-    solver->solve();
+    solver->solve()
 
     // if print this -> OK
     std::cout << "Programm Finished" << std::endl;

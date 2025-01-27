@@ -27,7 +27,7 @@ protected:
     vector_of_vectors m_expl_solution;
     vector_of_values m_t_points;
     value_type m_step;
-    index_type m_steps_limit = 10000;
+    index_type m_steps_limit = 1e7;
 
 public:
     explicit BaseRK(equation_type eq) 
@@ -47,7 +47,7 @@ public:
     bool solve();
 
 protected:
-    bool set_initial_value();
+    bool set_initial_value(bool is_real_problem);
 
 protected:
     virtual vector_of_values get_next_solution(
@@ -63,6 +63,9 @@ protected:
 
 protected:
     bool visualize();  
+
+protected:
+    bool visualize_trajectory();
 };
 
 
@@ -73,7 +76,7 @@ template<
 {
     try
     {
-        if (!set_initial_value()) {
+        if (!set_initial_value(true)) {
             throw std::runtime_error("Failed to set initial value.");
         }
 
@@ -106,15 +109,19 @@ template<
             throw std::runtime_error("Failed to compute max error.");
         }
 
-        if (!visualize()) 
+        // if (!visualize()) 
+        // {
+        //     throw std::runtime_error("Failed to visualize results.");
+        // }
+
+        if (!visualize_trajectory()) 
         {
             throw std::runtime_error("Failed to visualize results.");
         }
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Error in solve(): " << e.what() << '\n';
-        return false;
+        throw std::runtime_error("Error in solve(): " + std::string(e.what()));
     }
     
     return true;
@@ -124,15 +131,24 @@ template<
 template<
     typename IndexType,
     typename ValueType
-> bool BaseRK<IndexType, ValueType>::set_initial_value()
+> bool BaseRK<IndexType, ValueType>::set_initial_value(bool is_real_problem)
 {
     try
     {
-        auto start_point = m_equation.get_start_t();
+        if(is_real_problem)
+        {
+            m_t_points.push_back(m_equation.get_start_t());
+            m_calc_solution.push_back(m_equation.get_start_y());
+            m_expl_solution.push_back(m_equation.get_start_y());
+        }
+        else
+        {
+            auto start_point = m_equation.get_start_t();
 
-        m_calc_solution.push_back(m_equation.expl_sol(start_point));
-        m_expl_solution.push_back(m_equation.expl_sol(start_point));
-        m_t_points.push_back(start_point);
+            m_calc_solution.push_back(m_equation.expl_sol(start_point));
+            m_expl_solution.push_back(m_equation.expl_sol(start_point));
+            m_t_points.push_back(start_point);
+        }
     }
     catch (const std::exception& e)
     {
@@ -190,6 +206,7 @@ template<
 
         auto max_error = *std::max_element(error_by_time_steps.begin(), error_by_time_steps.end());
         std::cout << "Max error: " << max_error << std::endl;
+        std::cout << "Max error divided by stepsize " << max_error / std::pow(m_step, 4) << std::endl;
     }
     catch (const std::exception& e)
     {
@@ -244,6 +261,61 @@ template<
             std::string filename = "./basic" + std::to_string(i) + ".png";
             plt::save(filename);
         }
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error when visualize(): " << e.what() << '\n';
+        return false;
+    }
+
+    return true;
+}
+
+template<
+    typename IndexType,
+    typename ValueType
+> bool BaseRK<IndexType, ValueType>::visualize_trajectory()
+{
+    namespace plt = matplotlibcpp;
+
+    try
+    {
+        if (m_calc_solution.empty() || m_expl_solution.empty() || m_t_points.empty()) {
+            throw std::runtime_error("No data to visualize.");
+        }
+
+        vector_of_values calculated_x_vector_solution(m_calc_solution.size());
+        vector_of_values calculated_y_vector_solution(m_expl_solution.size());
+        // vector_of_values points_by_t(m_t_points.size());
+
+        std::transform(
+            m_calc_solution.begin(),
+            m_calc_solution.end(),
+            calculated_x_vector_solution.begin(),
+            [](const vector_of_values& calculated) { return calculated[0]; }
+        );
+
+        std::transform(
+            m_calc_solution.begin(),
+            m_calc_solution.end(),
+            calculated_y_vector_solution.begin(),
+            [](const vector_of_values& calculated) { return calculated[1]; }
+        );
+
+        plt::figure_size(1200, 780);
+        plt::named_plot("body trajectory", calculated_x_vector_solution, calculated_y_vector_solution);
+        plt::plot({1.}, {0.}, {{"color", "red"}, {"marker", "o"}, {"linestyle", "--"}});
+        plt::plot({0.}, {0.}, {{"color", "green"}, {"marker", "o"}, {"linestyle", "--"}});
+        // plt::xlim(-0.1, 1.1);
+        // plt::ylim(-0.6, 0.6);
+        plt::title("Resticted three body system");
+        plt::legend();
+        plt::xlabel("X");
+        plt::ylabel("Y");
+
+        std::string filename = "./traj.png";
+        plt::save(filename);
+        
     }
     catch (const std::exception& e)
     {

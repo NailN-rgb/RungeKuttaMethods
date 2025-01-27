@@ -16,6 +16,9 @@
 #include <RungeKuttaMethods/methods/ImplicitMethods/bakward_euler.h>
 #include <RungeKuttaMethods/methods/ImplicitMethods/crank_nicolcon.h>
 
+// adaptive
+#include <RungeKuttaMethods/methods/AdaptiveMethods/RKMerson.h>
+
 
 namespace Solvers_Fabric
 {
@@ -28,19 +31,22 @@ struct Solvers_Fabric
         typename equation_type
     > static std::unique_ptr<solvers::BaseRK<index_type, value_type>> apply(std::string solver_id, equation_type equation) 
     {
-        using base_solver_type      = solvers::BaseRK<index_type, value_type>;
+        using base_solver_type           = solvers::BaseRK<index_type, value_type>;
         //RK2
-        using Heuns_solver_type     = solvers::HeunsMethod::HeunsMethod<base_solver_type>;
-        using Butcher_solver_type   = solvers::ButcherMethod::ButcherMethod<base_solver_type>;
+        using Heuns_solver_type          = solvers::HeunsMethod::HeunsMethod<base_solver_type>;
+        using Butcher_solver_type        = solvers::ButcherMethod::ButcherMethod<base_solver_type>;
         //RK3 
-        using Kutta_solver_type     = solvers::KuttaMethod::KuttaMethod<base_solver_type>;
-        using Heun3d_solver_type    = solvers::Heun3dMethod::Heun3dMethod<base_solver_type>;
+        using Kutta_solver_type          = solvers::KuttaMethod::KuttaMethod<base_solver_type>;
+        using Heun3d_solver_type         = solvers::Heun3dMethod::Heun3dMethod<base_solver_type>;
         //RK4
-        using ClassicRK_solver_type = solvers::ClassicRungeKutta::ClassicRungeKutta<base_solver_type>;
+        using ClassicRK_solver_type      = solvers::ClassicRungeKutta::ClassicRungeKutta<base_solver_type>;
 
         // implicit methods
         using backward_euler_solver_type = solvers::BackwardEuler::BackwardEuler<base_solver_type>;
         using crank_nicolson_solver_type = solvers::CrankNicolson::CrankNicolson<base_solver_type>;
+
+        // adaptive methods
+        using Merson_solver_type         = solvers::MersonMethod::MersonMethod<base_solver_type>;
 
 
         if(solver_id == "RK2Heuns")
@@ -70,6 +76,10 @@ struct Solvers_Fabric
         else if(solver_id == "BackwardCrankNicolson")
         {
             return std::make_unique<crank_nicolson_solver_type>(equation);
+        }
+        else if(solver_id == "MersonRK")
+        {
+            return std::make_unique<Merson_solver_type>(equation);
         }
         else
         {

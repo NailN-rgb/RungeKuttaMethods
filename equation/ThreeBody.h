@@ -20,6 +20,8 @@ private:
     vector_of_values start_y;
     value_type end_point;
     value_type step;
+    value_type m_m = 0.012277471;
+    value_type m_M = 1 - m_m;
 
     // for adaptibe methods
     value_type estimate_eps = 0.001;
@@ -48,14 +50,27 @@ public:
     equation(const equation& eq) = default;
     ~equation() = default;
 
+private:
+    value_type r1(value_type x, value_type y)
+    {
+        return std::pow(std::pow(x + m_m, 2) + std::pow(y, 2), 1.5);
+    }
+
+private: 
+    value_type r2(value_type x, value_type y)
+    {
+        return std::pow(std::pow(x - m_M, 2) + std::pow(y, 2), 1.5);
+    }
+
 public:
-    vector_of_values f(value_type t, const vector_of_values& points) // t,x,y
-    {    
+    vector_of_values f(value_type t, const vector_of_values& points) // t, {x1, y1, x2, y2}
+    {   
+        auto x = points[0], y = points[1], u = points[2], v = points[3];
         return vector_of_values{
-            - std::sin(t) / std::pow((1 + std::exp(2 * t)), 0.5) + 
-                points[0] * (std::pow(points[0], 2) + std::pow(points[1], 2) - 1),
-            std::cos(t) / std::pow((1 + std::exp(2 * t)), 0.5) + 
-                points[1] * (std::pow(points[0], 2) + std::pow(points[1], 2) - 1)
+            u,
+            v,
+            x + 2 * v - m_M * (x + m_m) / r1(x, y) - m_m * (x - m_M) / r2(x, y),
+            y - 2 * u - m_M *  y        / r1(x, y) - m_m * y         / r2(x, y) 
         };
     }
 
@@ -63,8 +78,10 @@ public:
     vector_of_values expl_sol(value_type t)
     {
         vector_of_values res = {
-            std::cos(t) / std::pow(1 + std::exp(2 * t), 0.5),
-            std::sin(t) / std::pow(1 + std::exp(2 * t), 0.5)
+            0,
+            0,
+            0,
+            0
         };
 
         return res;
@@ -77,8 +94,8 @@ public:
     value_type get_step()          { return step; }
     // for adaptibe methods
     value_type get_epsilon()       { return estimate_eps; }
-    value_type get_min_step()          { return min_step; }
-    value_type get_max_step()          { return max_step; }
+    value_type get_min_step()      { return min_step; }
+    value_type get_max_step()      { return max_step; }
 };
 
 } //
